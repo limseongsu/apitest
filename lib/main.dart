@@ -30,12 +30,11 @@ class _MyHomePageState extends State<MyHomePage> {
   final ScrollController _controller = ScrollController();
   final TextEditingController _tcontroller = TextEditingController();
   final repository = Get.find<ViewModel>();
-
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    repository.api();
     _tcontroller;
   }
 
@@ -71,20 +70,14 @@ class _MyHomePageState extends State<MyHomePage> {
             ListView.builder(
               shrinkWrap: true,
               controller: _controller,
-              itemCount: 5,
+              itemCount: repository.jsonF.length,
               itemBuilder: (BuildContext context, int index) {
                 return Center(
-                  child: Card(
-                    child: Container(
-                      width: 200,
-                      height: 200,
-                      child: Column(
-                        children: [
-                          Image.network('${repository.jsonF[index].previewURL}',fit: BoxFit.cover,),
-                          Text('${repository.jsonF[index].tags}'),
-                        ],
-                      ),
-                    ),
+                  child: Column(
+                    children: [
+                      Card(child: Image.network('${repository.jsonF[index].previewURL}',fit: BoxFit.cover,)),
+                      Text('${repository.jsonF[index].tags}'),
+                    ],
                   ),
                 );
               },
